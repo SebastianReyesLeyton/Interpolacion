@@ -18,6 +18,8 @@ from numpy import (
 )
 import matplotlib.pyplot as plt
 
+# Improvements
+
 def binary_exponentiation(n, k):
     """
     Input: The base n and the exponent k
@@ -41,6 +43,8 @@ def binary_exponentiation(n, k):
         else: ans = ans*ans
     return ans
 
+# Creation of the system
+
 def adjustment_matrix(n, m, t):
     """
     Input: The degree of the polynomial n, the amount of data m, and 
@@ -59,6 +63,8 @@ def adjustment_matrix(n, m, t):
 
     return array(ans)
 
+# Matrix operations
+
 def permutations(M, i, j, row):
     """
     Input: The matrix M, columns/rows i and j, and a flag row that specify whether the permutation is in rows or columuns.
@@ -75,7 +81,7 @@ def permutations(M, i, j, row):
 
 def searchPivot(M, col):
     """
-    Input:
+    Input: 
     Description:
     Output:
     """
@@ -85,11 +91,11 @@ def searchPivot(M, col):
     while ( not flag and i < n ):
         j = col
         while ( not flag and j < m ):
-            flag = M[i][j]
+            flag = M[j][i]
             if not flag: j += 1
 
         if not flag: i += 1
-    ans = (i, j)
+    ans = (j, i)
     return ans
 
 def eliminationMatrix(M, col):
@@ -122,6 +128,8 @@ def eliminationMatrix(M, col):
                 ans[i][col] = (-1 * M[i][col])/M[col][col]
 
     return array(ans), M
+
+# Methods to resolve matrix systems
 
 def upperTriangular(A, b):
     """
@@ -188,11 +196,57 @@ def gaussianElimination(M, b):
     ans = upperTriangular(ans, br)
     return ans
 
+# Polynomial multiplication
 
 def mult(p1, p2):
-    ans = []
+    """
+    Input:
+    Description:
+    Output:
+    """
+    ans = [ 0 for _ in range(len(p1)-1 + len(p2)-1 + 1) ]
+
+    for i in range(len(p1)):
+        for j in range(len(p2)):
+            ans[i+j] += p1[i]*p2[j]
+
     return ans
 
+def lagrangeFunction(j, t):
+    """
+    Input:
+    Description:
+    Output:
+    """
+    ans, tmp,  n = [1], 1, len(t)
+
+    for k in range(n):
+
+        if ( k != j ):
+            p = [-t[k], 1]
+            ans = mult(p, ans)
+
+            tmp *= (t[j] - t[k])
+
+    for i in range(len(ans)):
+        ans[i] = ans[i] / tmp
+
+    return ans
+
+def newtonFunction(j, t):
+    ans = [1]
+
+    for k in range(j):
+        p = [-t[k], 1]
+        ans = mult(p, ans)
+        
+    return ans
+
+def main():
+    a = [-2, 3, 1]
+    b = [-7, 1]
+    print(mult(a, b))
+main()
 # Graphics
 
 def eval_polynomial(p, t, n):

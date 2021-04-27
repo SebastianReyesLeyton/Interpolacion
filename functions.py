@@ -214,6 +214,9 @@ def mult(p1, p2):
 
 def sumPolynomials(p1, p2):
     """
+    Input: The polynomials p1 and p2.
+    Description: This function sum both polynomials.
+    Output: The result of sum p1 and p2.
     """
     ans = []
 
@@ -298,12 +301,6 @@ def eval_polynomial(p, t, n):
         ans += p[i]*(t**i)
     return ans
 
-def main():
-    a = [0, 2, 1]
-    print(eval_polynomial(a, 1, 2))
-
-main()
-
 def proof(test, p, n):
     """
     Input: The array test which have the t values, the polynomial p, and the degree of the polynomial n
@@ -322,7 +319,7 @@ def graphics(polynomial, train, test, name):
     Input:
     Description:
     Output:
-    """
+    """ 
     ans = proof(train[0], polynomial, len(polynomial) - 1)    
     
     plt.figure(name)

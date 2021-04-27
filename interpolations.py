@@ -36,6 +36,8 @@ def polynomial(data):
     b = array([data[1]])
     b = b.T
 
+    print(A)
+    print(b)
     #ans = gaussianElimination(A, b)
     ans = solve(A, b)
 

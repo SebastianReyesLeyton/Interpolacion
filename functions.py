@@ -63,7 +63,7 @@ def adjustment_matrix(n, m, t):
         for j in range(n+1):
             ans[i][j] = t[i]**j
 
-    return array(ans)
+    return array(ans, dtype='float')
 
 # Matrix operations
 
@@ -320,11 +320,17 @@ def graphics(polynomial, train, test, name):
     Description:
     Output:
     """ 
+    print(len(polynomial))
     ans = proof(train[0], polynomial, len(polynomial) - 1)    
     
     plt.figure(name)
     plt.title(name)
     plt.plot(train[0], train[1], 'o')
-    plt.plot(train[0], ans[1])
+    plt.plot(train[0], ans)
     plt.plot(test[0], test[1], 'o')
+    plt.legend(
+        loc = 'upper right',
+        labels=['Training', 'Polynomial','Test']
+    )
+    plt.grid()
     plt.show()

@@ -107,7 +107,7 @@ def eliminationMatrix(M, col):
                  a permutation of the matrix M, which the position M[col][col] is different to 0.
     Output: The elimination matrix to M and M with its changes.
     """
-    #print(M[col][col])
+    
     ans = identity(len(M))
     if ( M[col][col] != 0 ):
         for i in range(col+1, len(M)):
@@ -138,8 +138,6 @@ def upperTriangular(A, b):
                  when the matrix has The upper Triangular form.
     Output: The x values that resolve the system.
     """
-    print(b)
-    print(A)
     n = len(b)
     
     ans = array([ [None] for _ in range(n) ])
@@ -196,7 +194,7 @@ def gaussianElimination(M, b):
     ans = upperTriangular(ans, br)
     return ans
 
-# Polynomial multiplication
+# Polynomial operations
 
 def mult(p1, p2):
     """
@@ -212,11 +210,29 @@ def mult(p1, p2):
 
     return ans
 
+def sumPolynomials(p1, p2):
+    """
+    """
+    ans = []
+
+    if (len(p1) > len(p2)):
+        n, m = len(p1), len(p2)
+        for i in range(n):
+            if (i < m): ans.append(p1[i] + p2[i])
+            else: ans.append(p1[i])
+    else:
+        n, m = len(p2), len(p1)
+        for i in range(n):
+            if (i < m): ans.append(p1[i] + p2[i])
+            else: ans.append(p2[i])
+
+    return ans
+
 # Auxiliar function by lagrange and newton interpolation
 
 def lagrangeFunction(j, t):
     """
-    Input: The index j and the array of t values.
+    Input: The index j and the array with t values.
     Description: This function calculate the polynomial create by l_j(t) of lagrange function, where
                  this is define as:
                                      __
@@ -247,23 +263,23 @@ def lagrangeFunction(j, t):
 
 def newtonFunction(j, t):
     """
-    Input:
-    Description:
-    Output:
+    Input: The index j and the array with the t values
+    Description: This function calculate the Newton phi function, which is define as:
+                               __
+                    phi_j(t) = || (t - t_k)
+
+                 Where this product start with k = 1 and finish when k > j-1. 
+    Output: The polynomial obtained by the product 
     """
-    ans = [1]
+    ans, tmp = [ [] for _ in range(j) ], [1]
 
     for k in range(j):
         p = [-t[k], 1]
-        ans = mult(p, ans)
+        tmp = mult(p, tmp)
+        ans[k] = tmp
         
     return ans
 
-def main():
-    a = [-2, 3, 1]
-    b = [-7, 1]
-    print(mult(a, b))
-main()
 # Graphics
 
 def eval_polynomial(p, t, n):
@@ -276,9 +292,15 @@ def eval_polynomial(p, t, n):
     Output: Result to assess t in the linear polynomial p.
     """
     ans = 0
-    for i in range(n):
-        ans += p[i][0]*(t**i)
+    for i in range(n+1):
+        ans += p[i]*(t**i)
     return ans
+
+def main():
+    a = [0, 2, 1]
+    print(eval_polynomial(a, 1, 2))
+
+main()
 
 def proof(test, p, n):
     """

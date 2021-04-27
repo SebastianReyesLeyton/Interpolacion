@@ -15,7 +15,10 @@ from functions import (
     gaussianElimination,
     lagrangeFunction,
     newtonFunction,
-    lowerTriangular
+    lowerTriangular,
+    eval_polynomial,
+    mult,
+    sumPolynomials
 )
 
 def polynomial(data):
@@ -27,12 +30,11 @@ def polynomial(data):
     ans, n = [], len(data[0])
 
     A = adjustment_matrix(n-1, n, data[0])
-    print(A)
     b = array([data[1]])
     b = b.T
-    print(b)
 
     ans = gaussianElimination(A, b)
+
     return ans
 
 def lagrange(data):
@@ -50,14 +52,14 @@ def lagrange(data):
     ans, n = [], len(data[0])
     ans = [ [ u*data[1][i] for u in lagrangeFunction(i, data[0])] for i in range(n) ]
 
-    pt = [ 0 for _ in range(n-1) ]
+    pt = [ 0 for _ in range(n) ]
     for i in range(n):
         for j in range(n):
             pt[i] += ans[j][i]
 
     ans = pt
     
-    return ans
+    return array([ans]).T
 
 def newton(data):
     """
@@ -66,12 +68,35 @@ def newton(data):
     Output:
     """
 
-    ans, n = [ [ 0 for _ in range(len(data[0])) ] for _ in range(len(data[0])) ], len(data[0])
+    ans, n = array([ [ 0 for _ in range(len(data[0])) ] for _ in range(len(data[0])) ]), len(data[0])
+    p = []
+
+    for i in range(n): ans[i][0] = 1
 
     for i in range(n):
 
         p = newtonFunction(i, data[0])
         for j in range(len(p)):
-            ans[i][j] = p[j]
-
+            tmp = eval_polynomial(p[j], data[0][i], len(p[j])-1)
+            ans[i][j+1] = tmp              
+    
     ans = lowerTriangular(array(ans), array([data[1]]).transpose() )
+
+    tmp = [ans[0][0]]
+    for i in range(len(p)):
+        p[i] = mult(p[i], [ans[i+1][0]])
+        tmp = sumPolynomials(tmp, p[i])
+
+    ans = tmp
+
+    return array([ans]).T
+
+
+def main():
+
+    data = [[-2, 0, 1],
+            [-27, -1, 0]]
+    
+    print(newton(data))
+
+main()

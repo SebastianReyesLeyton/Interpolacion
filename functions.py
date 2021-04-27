@@ -212,28 +212,45 @@ def mult(p1, p2):
 
     return ans
 
+# Auxiliar function by lagrange and newton interpolation
+
 def lagrangeFunction(j, t):
     """
-    Input:
-    Description:
-    Output:
+    Input: The index j and the array of t values.
+    Description: This function calculate the polynomial create by l_j(t) of lagrange function, where
+                 this is define as:
+                                     __
+                            l_j(t) = || (t - t_k)
+                                    _____________
+                                     __
+                                     || (t_j - t_k)
+                 
+                 where both products start with k=1, but k is always different of j, and finish when k > n
+    Output: The polynomial that is produced by lagrange funtion.
     """
     ans, tmp,  n = [1], 1, len(t)
 
     for k in range(n):
 
         if ( k != j ):
+
+            # Calculate the numerator
             p = [-t[k], 1]
             ans = mult(p, ans)
 
+            # Calculare the denominator
             tmp *= (t[j] - t[k])
 
-    for i in range(len(ans)):
-        ans[i] = ans[i] / tmp
+    for i in range(len(ans)): ans[i] = ans[i] / tmp
 
     return ans
 
 def newtonFunction(j, t):
+    """
+    Input:
+    Description:
+    Output:
+    """
     ans = [1]
 
     for k in range(j):

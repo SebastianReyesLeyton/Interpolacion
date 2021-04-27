@@ -26,11 +26,15 @@ def main():
     # Transform the time array
     for i in range(T.shape[0]): T[0][i] -= d
 
+    print(T[0])
+
     # Create the subset of train and test, and their corresponds outputs
-    T_train, T_test, y_train, y_test = train_test_split(T, y, test_size=0.3, random_state=42)
+    T_train, T_test, y_train, y_test = train_test_split(T, y, test_size=0.97, random_state=42)
 
     # Create the train matrix
     train = [list(T_train[0]), list(y_train[1])]
+
+    print(len(T_train))
 
     # Create the test matrix
     test = [list(T_test[0]), list(y_test[1])]
@@ -46,6 +50,7 @@ def main():
 
     print(f"Time: {stop - start}")
 
+    graphics(polynom, train, "Ejemplo")
     graphics(polynom, test, "Ejemplo")
 
 main()

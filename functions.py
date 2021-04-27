@@ -200,9 +200,9 @@ def gaussianElimination(M, b):
 
 def mult(p1, p2):
     """
-    Input:
-    Description:
-    Output:
+    Input: The polynomial p1 and p2
+    Description: This function perform the multiplication between p1 and p2
+    Output: The result of multiply p1 by p2
     """
     ans = [ 0 for _ in range(len(p1)-1 + len(p2)-1 + 1) ]
 
@@ -277,11 +277,15 @@ def proof(test, p, n):
     return ans
 
 def graphics(polynomial, data, name):
-
+    """
+    Input:
+    Description:
+    Output:
+    """
     ans = proof(data[0], polynomial, len(polynomial) - 1)    
     
     plt.figure(name)
     plt.title(name)
-    plt.plot(data[0], ans)
-    plt.plot(data[0], data[1])
+    plt.plot(data[0], ans, 'o')
+    plt.plot(data[0], data[1], 'o')
     plt.show()

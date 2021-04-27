@@ -18,12 +18,15 @@ from functions import (
     lowerTriangular,
     eval_polynomial,
     mult,
-    sumPolynomials
+    sumPolynomials,
+    solve,
+    graphics
 )
 
 def polynomial(data):
     """
-    Input: Matrix 2*n with data set.
+    Input: The matrix data of 2 x n data, which contain the t values on the first row and y values 
+           in the last one.
     Description: Implementation of polynomial interpolation methods.
     Output: The solve to the dataset data.
     """
@@ -33,13 +36,15 @@ def polynomial(data):
     b = array([data[1]])
     b = b.T
 
-    ans = gaussianElimination(A, b)
+    #ans = gaussianElimination(A, b)
+    ans = solve(A, b)
 
     return ans
 
 def lagrange(data):
     """
-    Input: The matrix data of 2 x n data, which contain the t values on the first row and y values en the last one.
+    Input: The matrix data of 2 x n data, which contain the t values on the first row and y values 
+           in the last one.
     Description: This function calls lagrange function, which calulate l_j(t) polynomials, and after multiply that polynomials
                  by its own y value, in others words, this function create the polynomial of the form:
 
@@ -63,9 +68,10 @@ def lagrange(data):
 
 def newton(data):
     """
-    Input:
+    Input: The matrix data of 2 x n data, which contain the t values on the first row and y values 
+           in the last one.
     Description:
-    Output:
+    Output: The polynomial that is obtained by use newton method.
     """
 
     ans, n = array([ [ 0 for _ in range(len(data[0])) ] for _ in range(len(data[0])) ]), len(data[0])
@@ -91,12 +97,22 @@ def newton(data):
 
     return array([ans]).T
 
+def piecewiseLinear(data):
+    """
+    Input: The matrix data of 2 x n data, which contain the t values on the first row and y values 
+           in the last one.
+    Description:
+    Output: The matrix of parameters for dataset.
+    """
 
-def main():
+    ans = []
 
-    data = [[-2, 0, 1],
-            [-27, -1, 0]]
-    
-    print(newton(data))
+    for i in range(len(data[0])-1):
 
-main()
+        p1 = [data[0][i], data[0][i+1]]
+        A = adjustment_matrix(1, 2, p1)
+        b = array([[data[1][i]],[data[1][i+1]]])
+         
+        ans.append(list(map(float,solve(A, b))))
+
+    return array(ans)

@@ -15,7 +15,9 @@ from numpy import (
     dot,       # Calculate the point product
     identity,  # Generate the identity matrix
     matmul     # Realize the matricial multiplication
+    
 )
+from numpy.linalg import solve
 import matplotlib.pyplot as plt
 
 # Improvements
@@ -315,16 +317,17 @@ def proof(test, p, n):
 
     return ans
 
-def graphics(polynomial, data, name):
+def graphics(polynomial, train, test, name):
     """
     Input:
     Description:
     Output:
     """
-    ans = proof(data[0], polynomial, len(polynomial) - 1)    
+    ans = proof(train[0], polynomial, len(polynomial) - 1)    
     
     plt.figure(name)
     plt.title(name)
-    plt.plot(data[0], ans, 'o')
-    plt.plot(data[0], data[1], 'o')
+    plt.plot(train[0], train[1], 'o')
+    plt.plot(train[0], ans[1])
+    plt.plot(test[0], test[1], 'o')
     plt.show()

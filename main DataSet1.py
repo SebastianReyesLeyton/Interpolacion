@@ -1,5 +1,5 @@
 
-from numpy import mean, std
+from numpy import mean, std, float64
 from pandas import read_csv, DataFrame
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -32,7 +32,7 @@ def main():
     for i in range(T.shape[0]): T[0][i] -= d
 
     # The best jump 20
-    jump = 20
+    jump = 2
 
     # Create the subset of train and test, and their corresponds outputs
     T_train, T_test, y_train, y_test = [T[0][0]] , [], [y[1][0]], []
@@ -62,13 +62,15 @@ def main():
     polynom = piecewiseLinear(train)
     stop = time()
 
-    polynom = list(polynom.T[0])
-
-    print(polynom)
-
     print(f"Time: {stop - start}")
 
-    m, s = error(test[1], proof(test[0], polynom, len(polynom)-1))
+    if (len(polynom[0]) == 1):
+        polynom = list(polynom.T[0])
+        p = proof(test[0] , polynom, len(polynom)-1)
+    else:
+        p = proof([test[0], [[train[0][i], train[0][i+1]] for i in range(len(train[0])-1)] ] , polynom, len(polynom)-1)
+    
+    m, s = error(test[1], p)
     print(jump, m, s, float(m+s), float(m-s))
 
     graphics(polynom, train, test, f"Pronostico del tiempo - Jump = {jump}")

@@ -17,7 +17,8 @@ from numpy import (
     matmul,    # Realize the matricial multiplication
     linspace,  # Return a quantity num of points between start and stop
     mean,      # Calculate the mean
-    std        # Calculate de standard desviation
+    std,        # Calculate de standard desviation
+    float64
     
 )
 from numpy.linalg import solve  # Resolve the Ax = b linear system
@@ -314,8 +315,17 @@ def proof(test, p, n):
     Output: The evaluation of all t values in polynomial p.
     """
     ans = []
-    for t in test:
-        ans.append(eval_polynomial(p, t, n))
+    if (type(p[0]) is float64):
+        for t in test:
+            ans.append(eval_polynomial(p, t, n))
+    else:
+        i = 0
+        for t in test[0]:
+            if t <= test[1][i][1]:
+                ans.append(eval_polynomial(p[i], t, 1))
+            else:
+                i += 1
+                ans.append(eval_polynomial(p[i], t, 1))
 
     return ans
 
@@ -326,9 +336,11 @@ def graphics(polynomial, train, test, name):
                  graphic, then show that graphic with the name pass by parameters.
     Output: None
     """ 
-    print(len(polynomial))
     t = linspace(0, train[0][-1], 1000)
-    ans = proof(t, polynomial, len(polynomial) - 1)    
+    if (type(polynomial[0]) is float64):
+        ans = proof(t, polynomial, len(polynomial) - 1)
+    else:
+        ans = proof( [t, [[train[0][i], train[0][i+1]] for i in range(len(train[0])-1)] ], polynomial, len(polynomial) - 1)
     
     plt.figure(name)
     plt.title(name)

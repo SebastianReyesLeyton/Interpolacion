@@ -4,7 +4,10 @@ from pandas import read_csv, DataFrame
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from interpolations import (
-    polynomial
+    polynomial, 
+    lagrange,
+    newton,
+    piecewiseLinear
 )
 from functions import (
     graphics,
@@ -28,7 +31,7 @@ def main():
     # Transform the time array
     for i in range(T.shape[0]): T[0][i] -= d
 
-    # The best jump
+    # The best jump 55
     jump = 55
 
     # Create the subset of train and test, and their corresponds outputs
@@ -58,7 +61,7 @@ def main():
 
     # Obtain the polynomial through normalize equations
     start = time()
-    polynom = polynomial(train)
+    polynom = piecewiseLinear(train)
     stop = time()
 
     polynom = list(polynom.T[0])
@@ -68,8 +71,9 @@ def main():
     print(f"Time: {stop - start}")
 
     m, s = error(test[1], proof(test[0], polynom, len(polynom)-1))
-    print(jump, m, s, int(m+s), int(m-s))
-    graphics(polynom, train, test, f"Polynomial Interpolation - train size = {len(train[0])}")
+    print(jump, m, s, float(m+s), float(m-s))
+
+    graphics(polynom, train, test, f"Ocupación UCI COVID-19 - jump = {jump}")
     
 
 main()

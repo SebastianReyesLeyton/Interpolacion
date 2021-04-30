@@ -6,7 +6,8 @@ from sklearn.model_selection import train_test_split
 from interpolations import (
     polynomial,
     lagrange,
-    newton
+    newton,
+    piecewiseLinear
 )
 from functions import (
     graphics,
@@ -30,8 +31,8 @@ def main():
     # Transform the time array
     for i in range(T.shape[0]): T[0][i] -= d
 
-    # The best jump
-    jump = 23
+    # The best jump 20
+    jump = 20
 
     # Create the subset of train and test, and their corresponds outputs
     T_train, T_test, y_train, y_test = [T[0][0]] , [], [y[1][0]], []
@@ -50,7 +51,7 @@ def main():
 
     # Create the train matrix
     train = [list(map(int, T_train)), list(map(int, y_train))]
-
+    
     # Create the test matrix
     test = [T_test, y_test]
 
@@ -58,7 +59,7 @@ def main():
 
     # Obtain the polynomial through normalize equations
     start = time()
-    polynom = polynomial(train)
+    polynom = piecewiseLinear(train)
     stop = time()
 
     polynom = list(polynom.T[0])
@@ -68,8 +69,8 @@ def main():
     print(f"Time: {stop - start}")
 
     m, s = error(test[1], proof(test[0], polynom, len(polynom)-1))
-    print(jump, m, s, int(m+s), int(m-s))
+    print(jump, m, s, float(m+s), float(m-s))
 
-    graphics(polynom, train, test, f"Polynomial Interpolation - train size = {len(train[0])}")
+    graphics(polynom, train, test, f"Pronostico del tiempo - Jump = {jump}")
     
 main()

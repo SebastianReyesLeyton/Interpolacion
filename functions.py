@@ -339,6 +339,7 @@ def graphics(polynomial, train, test, name):
         loc = 'upper right',
         labels=['Training', 'Polynomial','Test']
     )
+    plt.xlabel(f'Quantity: {len(train[0])}')
     plt.grid()
     plt.show()
 

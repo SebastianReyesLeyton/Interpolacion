@@ -1,6 +1,6 @@
 """
 Name File: Functions.py 
-Version: 1.0
+Version: 2.5
 Description: A file with external functions used on interpolations.py 
              classe
 

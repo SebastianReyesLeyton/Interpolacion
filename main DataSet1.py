@@ -9,7 +9,9 @@ from interpolations import (
     newton
 )
 from functions import (
-    graphics
+    graphics,
+    error,
+    proof
 )
 from time import time
 
@@ -28,22 +30,15 @@ def main():
     # Transform the time array
     for i in range(T.shape[0]): T[0][i] -= d
 
-    print(T[0][0])
-
-    jump = 14
+    # The best jump
+    jump = 23
 
     # Create the subset of train and test, and their corresponds outputs
     T_train, T_test, y_train, y_test = [T[0][0]] , [], [y[1][0]], []
 
-    print(T_train, y_train)
-
-    print(T)
-    print(y)
-    print(T_train)
-
     for i in range(1, T.shape[0]-1):
 
-        if (i % (jump-1)):
+        if (i % (jump)):
             T_test.append(T[0][i])
             y_test.append(y[1][i])
         else:
@@ -53,14 +48,8 @@ def main():
     T_train.append(T[0][T.shape[0]-1])
     y_train.append(y[1][y.shape[0]-1])
 
-    print("HOla")
-
     # Create the train matrix
     train = [list(map(int, T_train)), list(map(int, y_train))]
-
-    print(T_train, y_train)
-
-    print(len(T_train))
 
     # Create the test matrix
     test = [T_test, y_test]
@@ -77,6 +66,9 @@ def main():
     print(polynom)
 
     print(f"Time: {stop - start}")
+
+    m, s = error(test[1], proof(test[0], polynom, len(polynom)-1))
+    print(jump, m, s, int(m+s), int(m-s))
 
     graphics(polynom, train, test, f"Polynomial Interpolation - train size = {len(train[0])}")
     

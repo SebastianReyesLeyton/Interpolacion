@@ -1,6 +1,6 @@
 """
 Name File: Interpolation.py
-Version: 1.0
+Version: 2.5
 Description: Implementation of interpolation methods
              Polynomial, Lagrage, Newton and piecewise
 Participants:
@@ -36,8 +36,6 @@ def polynomial(data):
     b = array([data[1]])
     b = b.T
 
-    print(A)
-    print(b)
     #ans = gaussianElimination(A, b)
     ans = solve(A, b)
 
@@ -105,7 +103,14 @@ def piecewiseLinear(data):
     """
     Input: The matrix data of 2 x n data, which contain the t values on the first row and y values 
            in the last one.
-    Description:
+    Description: This function implement the piecewise linear interpolation, which consist in take two
+                 points, then create a matrix of the form:
+
+                    A = [[1   t_j  ]  
+                         [1 t_{j+1}]]
+                 The vector b has the y-values assign to t_j and t_{j+1} (in that order). After create 
+                 the matrix A and the vector b, proceed to resolve the system Ax = b and the result is
+                 returned.
     Output: The matrix of parameters for dataset.
     """
 

@@ -1,12 +1,12 @@
 """
 Name File: Functions.py 
-Version: 2.5
+Version: 3.0
 Description: A file with external functions used on interpolations.py 
              classe
 
 Participants:
-- Juan Sebastián Reyes
-- Alexander Castro
+    - Juan Sebastián Reyes
+    - Alexander Castro
 """
 
 from numpy import (
@@ -74,8 +74,9 @@ def adjustment_matrix(n, m, t):
 def permutations(M, i, j, row):
     """
     Input: The matrix M, columns/rows i and j, and a flag row that specify whether the permutation is in rows or columuns.
-    Description:
-    Output:
+    Description: This function permutate the rows i and j if the parameter row is 1, else this function permutate i and j 
+                 columns. Then the result matrix is returned.
+    Output: The matrix permuted.
     """
     ans = identity(len(M))
     ans[i][j] = ans[i][i]; ans[i][i] = 0
@@ -187,9 +188,10 @@ def lowerTriangular(A, b):
 
 def gaussianElimination(M, b):
     """
-    Input:
-    Description:
-    Output:
+    Input: The matrix M and the vector b
+    Description: This function implement the solution of linear system Ax = b through
+                 gaussian elimination.
+    Output: The solution of the linear system Ax = b
     """
 
     ans, Me, br = M, [], b

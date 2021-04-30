@@ -1,4 +1,10 @@
-
+"""
+Name: main DataSet1.py
+Version: 2.2
+Participants:
+    - Juan Sebastián Reyes
+    - Alexander Castro
+"""
 from numpy import mean, std, float64
 from pandas import read_csv, DataFrame
 import matplotlib.pyplot as plt
@@ -61,18 +67,25 @@ def main():
     start = time()
     polynom = piecewiseLinear(train)
     stop = time()
+    
+    # Show the polynomial
+    print(polynom)
 
+    # Show the runtime of the interpolation method
     print(f"Time: {stop - start}")
 
+    # If the piecewise method?
     if (len(polynom[0]) == 1):
         polynom = list(polynom.T[0])
         p = proof(test[0] , polynom, len(polynom)-1)
     else:
         p = proof([test[0], [[train[0][i], train[0][i+1]] for i in range(len(train[0])-1)] ] , polynom, len(polynom)-1)
     
+    # Caculate the average absolute error
     m, s = error(test[1], p)
     print(jump, m, s, float(m+s), float(m-s))
 
+    # Show the interpolation method graphic
     graphics(polynom, train, test, f"Pronostico del tiempo - Jump = {jump}")
     
 main()

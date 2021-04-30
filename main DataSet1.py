@@ -4,7 +4,9 @@ from pandas import read_csv, DataFrame
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from interpolations import (
-    polynomial
+    polynomial,
+    lagrange,
+    newton
 )
 from functions import (
     graphics
@@ -14,7 +16,7 @@ from time import time
 def main():
 
     # Upload data of .csv file
-    data = read_csv("./DataSet1.csv", header=None) # The time is expressed on days.
+    data = read_csv("./DataSet1.csv", header=None) # The time is expressed on minutes.
 
     # Obtain the array of time and its linked values
     T = data.drop(1, axis=1)
@@ -28,7 +30,7 @@ def main():
 
     print(T[0][0])
 
-    jump = 5
+    jump = 14
 
     # Create the subset of train and test, and their corresponds outputs
     T_train, T_test, y_train, y_test = [T[0][0]] , [], [y[1][0]], []

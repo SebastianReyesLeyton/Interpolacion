@@ -14,10 +14,13 @@ from numpy import (
     array,     # Type of data to allow use numpy functions
     dot,       # Calculate the point product
     identity,  # Generate the identity matrix
-    matmul     # Realize the matricial multiplication
+    matmul,    # Realize the matricial multiplication
+    linspace,  # Return a quantity num of points between start and stop
+    mean,      # Calculate the mean
+    std        # Calculate de standard desviation
     
 )
-from numpy.linalg import solve
+from numpy.linalg import solve  # Resolve the Ax = b linear system
 import matplotlib.pyplot as plt
 
 # Improvements
@@ -83,9 +86,11 @@ def permutations(M, i, j, row):
 
 def searchPivot(M, col):
     """
-    Input: 
-    Description:
-    Output:
+    Input: The matrix M and the index col
+    Description: This functions seach a position in the matrix that its value is not 0,
+                 then return that position (i, j).
+                 Note: This function search between col <= i, j < n 
+    Output: The position i and j, where i represent the row position and j column position.
     """
     ans, i, j, flag = None, col, col, M[col][col]
     n, m = len(M), len(M[0])
@@ -316,21 +321,35 @@ def proof(test, p, n):
 
 def graphics(polynomial, train, test, name):
     """
-    Input:
-    Description:
-    Output:
+    Input: The polynomial, the train and test dataset and the name of the graphic
+    Description: This function graphics train and test points, and the polynomial in the same
+                 graphic, then show that graphic with the name pass by parameters.
+    Output: None
     """ 
     print(len(polynomial))
-    ans = proof(train[0], polynomial, len(polynomial) - 1)    
+    t = linspace(0, train[0][-1], 1000)
+    ans = proof(t, polynomial, len(polynomial) - 1)    
     
     plt.figure(name)
     plt.title(name)
-    plt.plot(train[0], train[1], 'o')
-    plt.plot(train[0], ans)
+    plt.plot(t, ans)
     plt.plot(test[0], test[1], 'o')
+    plt.plot(train[0], train[1], 'o')
     plt.legend(
         loc = 'upper right',
         labels=['Training', 'Polynomial','Test']
     )
     plt.grid()
     plt.show()
+
+# Error function
+
+def error(real, estimate):
+    """
+    Input: The list of real values and the list of estimate values.
+    Description: This function calculate the average mean and the standard desviation of
+                 absolute error between real and estimate values.
+    Output: The mean and standard desviation of the error.
+    """
+    ans = [ r - e for r, e in zip(real, estimate)]
+    return mean(ans), std(ans)

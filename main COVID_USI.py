@@ -28,8 +28,8 @@ def main():
 
     print(T[0][0])
 
-    # best = 19 o 17
-    jump = 17
+    # best = 80 - 60 - 59 - 56 - 49 - 48 - 47 - 46 - 32 - 31 - 28
+    jump = 19
 
     # Create the subset of train and test, and their corresponds outputs
     T_train, T_test, y_train, y_test = [T[0][0]] , [], [y[1][0]], []

@@ -47,7 +47,7 @@ def lagrange(data):
     """
     Input: The matrix data of 2 x n data, which contain the t values on the first row and y values 
            in the last one.
-    Description: This function calls lagrange function, which calulate l_j(t) polynomials, and after multiply that polynomials
+    Description: This function calls lagrange function, which calculate l_j(t) polynomials, and after multiply that polynomials
                  by its own y value, in others words, this function create the polynomial of the form:
 
                         p_(n-1)(t) = y_1 * l_1(t) + y_2 * l_2(t) + ... + y_(n-1) * l_(n-1)(t)
@@ -72,7 +72,9 @@ def newton(data):
     """
     Input: The matrix data of 2 x n data, which contain the t values on the first row and y values 
            in the last one.
-    Description:
+    Description: This function calls newton function, which calculate phi_j(t) function of newton. With
+                 that values the lower triangular matrix of newton method is generated and then the result
+                 of solve that system by successive forward substitution is returned.
     Output: The polynomial that is obtained by use newton method.
     """
 
